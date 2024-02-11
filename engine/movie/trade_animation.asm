@@ -128,10 +128,10 @@ RunTradeAnimScript:
 	push af
 	xor a
 	ldh [hMapAnims], a
-	ld hl, wStateFlags
+	ld hl, wVramState
 	ld a, [hl]
 	push af
-	res SPRITE_UPDATES_DISABLED_F, [hl]
+	res 0, [hl]
 	ld hl, wOptions
 	ld a, [hl]
 	push af
@@ -148,7 +148,7 @@ RunTradeAnimScript:
 	pop af
 	ld [wOptions], a
 	pop af
-	ld [wStateFlags], a
+	ld [wVramState], a
 	pop af
 	ldh [hMapAnims], a
 	ret

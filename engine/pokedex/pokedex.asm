@@ -30,10 +30,10 @@ Pokedex:
 	ld a, [hl]
 	push af
 	set NO_TEXT_SCROLL, [hl]
-	ld a, [wStateFlags]
+	ld a, [wVramState]
 	push af
 	xor a
-	ld [wStateFlags], a
+	ld [wVramState], a
 	ldh a, [hInMenu]
 	push af
 	ld a, $1
@@ -64,7 +64,7 @@ Pokedex:
 	pop af
 	ldh [hInMenu], a
 	pop af
-	ld [wStateFlags], a
+	ld [wVramState], a
 	pop af
 	ld [wOptions], a
 	pop af

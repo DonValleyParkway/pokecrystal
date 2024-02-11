@@ -221,7 +221,7 @@ Function4a94e:
 	ld [wd019], a
 	ld b, SCGB_PACKPALS
 	call GetSGBLayout
-	call SetDefaultBGPAndOBP
+	call SetPalettes
 	call Function4aa22
 	jr c, .asm_4a985
 	jr z, .asm_4a9a1
@@ -342,10 +342,10 @@ Function4aa34:
 	farcall WritePartyMenuTilemap
 	xor a
 	ld [wPartyMenuActionText], a
-	farcall PlacePartyMenuText
+	farcall PrintPartyMenuText
 	call Function4aab6
 	call WaitBGMap
-	call SetDefaultBGPAndOBP
+	call SetPalettes
 	call DelayFrame
 	call Function4ab1a
 	jr z, .asm_4aa66

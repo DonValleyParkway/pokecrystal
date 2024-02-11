@@ -80,7 +80,7 @@ endc
 	bccoord 1, 14
 	pop af
 	ldh [rSVBK], a
-	call PrintTextboxTextAt
+	call PlaceHLTextAtBC
 	ret
 
 INCLUDE "mobile/fixed_words.asm"

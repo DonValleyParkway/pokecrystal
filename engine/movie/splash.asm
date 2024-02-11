@@ -19,7 +19,7 @@ SplashScreen:
 	call WaitBGMap
 	ld b, SCGB_GAMEFREAK_LOGO
 	call GetSGBLayout
-	call SetDefaultBGPAndOBP
+	call SetPalettes
 	ld c, 10
 	call DelayFrames
 

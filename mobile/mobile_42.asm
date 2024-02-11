@@ -95,10 +95,10 @@ RunMobileTradeAnim_Frontpics:
 	push af
 	xor a
 	ldh [hMapAnims], a
-	ld hl, wStateFlags
+	ld hl, wVramState
 	ld a, [hl]
 	push af
-	res SPRITE_UPDATES_DISABLED_F, [hl]
+	res 0, [hl]
 	ld hl, wOptions
 	ld a, [hl]
 	push af
@@ -110,7 +110,7 @@ RunMobileTradeAnim_Frontpics:
 	pop af
 	ld [wOptions], a
 	pop af
-	ld [wStateFlags], a
+	ld [wVramState], a
 	pop af
 	ldh [hMapAnims], a
 	ret
@@ -124,7 +124,7 @@ RunMobileTradeAnim_NoFrontpics:
 	push af
 	xor a
 	ldh [hMapAnims], a
-	ld hl, wStateFlags
+	ld hl, wVramState
 	ld a, [hl]
 	push af
 	res 0, [hl]
@@ -139,7 +139,7 @@ RunMobileTradeAnim_NoFrontpics:
 	pop af
 	ld [wOptions], a
 	pop af
-	ld [wStateFlags], a
+	ld [wVramState], a
 	pop af
 	ldh [hMapAnims], a
 	ret

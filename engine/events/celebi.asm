@@ -8,10 +8,10 @@ INCBIN "gfx/tilesets/forest-tree/4.2bpp"
 
 CelebiShrineEvent:
 	call DelayFrame
-	ld a, [wStateFlags]
+	ld a, [wVramState]
 	push af
 	xor a
-	ld [wStateFlags], a
+	ld [wVramState], a
 	call LoadCelebiGFX
 	depixel 0, 10, 7, 0
 	ld a, SPRITE_ANIM_OBJ_CELEBI
@@ -49,7 +49,7 @@ CelebiShrineEvent:
 
 .done
 	pop af
-	ld [wStateFlags], a
+	ld [wVramState], a
 	call .RestorePlayerSprite_DespawnLeaves
 	call CelebiEvent_SetBattleType
 	ret

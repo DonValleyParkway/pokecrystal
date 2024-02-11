@@ -91,12 +91,12 @@ GetMapSceneID::
 	pop bc
 	ret
 
-LoadOverworldTilemapAndAttrmapPals::
-	call LoadOverworldTilemap
-	call LoadOverworldAttrmapPals
+OverworldTextModeSwitch::
+	call LoadMapPart
+	call SwapTextboxPalettes
 	ret
 
-LoadOverworldTilemap::
+LoadMapPart::
 	ldh a, [hROMBank]
 	push af
 
@@ -109,9 +109,9 @@ LoadOverworldTilemap::
 	ld bc, SCREEN_WIDTH * SCREEN_HEIGHT
 	call ByteFill
 
-	ld a, BANK(_LoadOverworldTilemap)
+	ld a, BANK(_LoadMapPart)
 	rst Bankswitch
-	call _LoadOverworldTilemap
+	call _LoadMapPart
 
 	pop af
 	rst Bankswitch
@@ -252,12 +252,12 @@ GetDestinationWarpNumber::
 	ld a, [wPlayerMapX]
 	sub 4
 	ld d, a
-	ld a, [wCurMapWarpEventCount]
+	ld a, [wCurMapWarpCount]
 	and a
 	ret z
 
 	ld c, a
-	ld hl, wCurMapWarpEventsPointer
+	ld hl, wCurMapWarpsPointer
 	ld a, [hli]
 	ld h, [hl]
 	ld l, a
@@ -290,7 +290,7 @@ GetDestinationWarpNumber::
 	call .IncreaseHLTwice
 	ret nc ; never encountered
 
-	ld a, [wCurMapWarpEventCount]
+	ld a, [wCurMapWarpCount]
 	inc a
 	sub c
 	ld c, a
@@ -317,7 +317,7 @@ CopyWarpData::
 
 .CopyWarpData:
 	push bc
-	ld hl, wCurMapWarpEventsPointer
+	ld hl, wCurMapWarpsPointer
 	ld a, [hli]
 	ld h, [hl]
 	ld l, a
@@ -406,7 +406,7 @@ ReadMapEvents::
 	ld l, a
 	inc hl
 	inc hl
-	call ReadWarpEvents
+	call ReadWarps
 	call ReadCoordEvents
 	call ReadBGEvents
 
@@ -516,14 +516,14 @@ ReadMapCallbacks::
 	call AddNTimes
 	ret
 
-ReadWarpEvents::
+ReadWarps::
 	ld a, [hli]
 	ld c, a
-	ld [wCurMapWarpEventCount], a
+	ld [wCurMapWarpCount], a
 	ld a, l
-	ld [wCurMapWarpEventsPointer], a
+	ld [wCurMapWarpsPointer], a
 	ld a, h
-	ld [wCurMapWarpEventsPointer + 1], a
+	ld [wCurMapWarpsPointer + 1], a
 	ld a, c
 	and a
 	ret z
@@ -1518,12 +1518,12 @@ GetMovementPermissions::
 	ld d, a
 	ld a, [wPlayerMapY]
 	ld e, a
-	call GetCoordTileCollision
-	ld [wPlayerTileCollision], a
+	call GetCoordTile
+	ld [wPlayerTile], a
 	call .CheckHiNybble
 	ret nz
 
-	ld a, [wPlayerTileCollision]
+	ld a, [wPlayerTile]
 	and 7
 	ld hl, .MovementPermissionsData
 	add l
@@ -1555,13 +1555,13 @@ GetMovementPermissions::
 
 	push de
 	inc e
-	call GetCoordTileCollision
+	call GetCoordTile
 	ld [wTileDown], a
 	call .Down
 
 	pop de
 	dec e
-	call GetCoordTileCollision
+	call GetCoordTile
 	ld [wTileUp], a
 	call .Up
 	ret
@@ -1574,13 +1574,13 @@ GetMovementPermissions::
 
 	push de
 	dec d
-	call GetCoordTileCollision
+	call GetCoordTile
 	ld [wTileLeft], a
 	call .Left
 
 	pop de
 	inc d
-	call GetCoordTileCollision
+	call GetCoordTile
 	ld [wTileRight], a
 	call .Right
 	ret
@@ -1708,7 +1708,7 @@ GetFacingTileCoord::
 	db  1,  0
 	dw wTileRight
 
-GetCoordTileCollision::
+GetCoordTile::
 ; Get the collision byte for tile d, e
 	call GetBlockLocation
 	ld a, [hl]
@@ -1911,7 +1911,7 @@ FadeToMenu::
 	xor a
 	ldh [hBGMapMode], a
 	call LoadStandardMenuHeader
-	farcall FadeOutToWhite
+	farcall FadeOutPalettes
 	call ClearSprites
 	call DisableSpriteUpdates
 	ret
@@ -1935,13 +1935,13 @@ FinishExitMenu::
 	call GetSGBLayout
 	farcall LoadOW_BGPal7
 	call WaitBGMap2
-	farcall FadeInFromWhite
+	farcall FadeInPalettes
 	call EnableSpriteUpdates
 	ret
 
 ReturnToMapWithSpeechTextbox::
 	push af
-	ld a, TRUE
+	ld a, $1
 	ld [wSpriteUpdatesEnabled], a
 	call ClearBGPalettes
 	call ClearSprites
@@ -1949,8 +1949,8 @@ ReturnToMapWithSpeechTextbox::
 	hlcoord 0, 12
 	lb bc, 4, 18
 	call Textbox
-	ld hl, wStateFlags
-	set SPRITE_UPDATES_DISABLED_F, [hl]
+	ld hl, wVramState
+	set 0, [hl]
 	call UpdateSprites
 	call WaitBGMap2
 	ld b, SCGB_MAPPALS
@@ -1977,7 +1977,7 @@ ReloadTilesetAndPalettes::
 	ld c, a
 	call SwitchToAnyMapAttributesBank
 	farcall UpdateTimeOfDayPal
-	call LoadOverworldTilemapAndAttrmapPals
+	call OverworldTextModeSwitch
 	call LoadTilesetGFX
 	ld a, 9
 	call SkipMusic

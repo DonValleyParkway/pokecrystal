@@ -66,7 +66,7 @@ endc
 	call WaitBGMap
 	ld b, SCGB_DIPLOMA
 	call GetSGBLayout
-	call SetDefaultBGPAndOBP
+	call SetPalettes
 	pop de
 
 	hlcoord 2, 8
@@ -1554,7 +1554,7 @@ InitMysteryGiftLayout:
 	call WaitBGMap
 	ld b, SCGB_MYSTERY_GIFT
 	call GetSGBLayout
-	call SetDefaultBGPAndOBP
+	call SetPalettes
 	ret
 
 .Load5GFX:
@@ -1726,7 +1726,7 @@ endr
 	call WaitBGMap
 	ld b, SCGB_DIPLOMA
 	call GetSGBLayout
-	call SetDefaultBGPAndOBP
+	call SetPalettes
 	ret
 
 StageDataForNameCard:
@@ -1851,7 +1851,7 @@ InitNameCardLayout:
 	call WaitBGMap
 	ld b, CRYSTAL_CGB_NAME_CARD
 	farcall GetCrystalCGBLayout
-	jp SetDefaultBGPAndOBP
+	jp SetPalettes
 
 .Load6Row:
 	ld b,  6

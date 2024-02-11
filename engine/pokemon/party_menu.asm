@@ -5,7 +5,7 @@ SelectMonFromParty:
 	call ClearBGPalettes
 	call InitPartyMenuLayout
 	call WaitBGMap
-	call SetDefaultBGPAndOBP
+	call SetPalettes
 	call DelayFrame
 	call PartyMenuSelect
 	call ReturnToMapWithSpeechTextbox
@@ -20,7 +20,7 @@ SelectTradeOrDayCareMon:
 	call WaitBGMap
 	ld b, SCGB_PARTY_MENU
 	call GetSGBLayout
-	call SetDefaultBGPAndOBP
+	call SetPalettes
 	call DelayFrame
 	call PartyMenuSelect
 	call ReturnToMapWithSpeechTextbox
@@ -31,7 +31,7 @@ InitPartyMenuLayout:
 	call InitPartyMenuWithCancel
 	call InitPartyMenuGFX
 	call WritePartyMenuTilemap
-	call PlacePartyMenuText
+	call PrintPartyMenuText
 	ret
 
 LoadPartyMenuGFX:
@@ -703,7 +703,7 @@ PartyMenuSelect:
 	scf
 	ret
 
-PlacePartyMenuText:
+PrintPartyMenuText:
 	hlcoord 0, 14
 	lb bc, 2, 18
 	call Textbox

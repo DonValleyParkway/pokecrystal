@@ -40,4 +40,8 @@ IconPointers:
 	dw SlowpokeIcon
 	dw SudowoodoIcon
 	dw BigmonIcon
+;	dw ChikoritaIcon
+;	dw CyndaquilIcon
+;	dw TotodileIcon
+    dw MewtwoIcon
 	assert_table_length NUM_ICONS + 1

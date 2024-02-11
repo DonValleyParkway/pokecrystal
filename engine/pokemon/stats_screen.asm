@@ -533,7 +533,7 @@ StatsScreen_LoadGFX:
 	ld hl, wStatsScreenFlags
 	bit 4, [hl]
 	jr nz, .place_frontpic
-	call SetDefaultBGPAndOBP
+	call SetPalettes
 	ret
 
 .place_frontpic
@@ -834,16 +834,16 @@ StatsScreen_PlaceFrontpic:
 
 .egg
 	call .AnimateEgg
-	call SetDefaultBGPAndOBP
+	call SetPalettes
 	ret
 
 .no_cry
 	call .AnimateMon
-	call SetDefaultBGPAndOBP
+	call SetPalettes
 	ret
 
 .cry
-	call SetDefaultBGPAndOBP
+	call SetPalettes
 	call .AnimateMon
 	ld a, [wCurPartySpecies]
 	call PlayMonCry2
@@ -1037,7 +1037,7 @@ endc
 	call PlaceString
 	ld hl, wStatsScreenFlags
 	set 5, [hl]
-	call SetDefaultBGPAndOBP
+	call SetPalettes ; pals
 	call DelayFrame
 	hlcoord 0, 0
 	call PrepMonFrontpic

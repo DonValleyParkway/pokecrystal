@@ -9,10 +9,10 @@
 	const TRAINERCARDSTATE_QUIT          ; 6
 
 TrainerCard:
-	ld a, [wStateFlags]
+	ld a, [wVramState]
 	push af
 	xor a
-	ld [wStateFlags], a
+	ld [wVramState], a
 	ld hl, wOptions
 	ld a, [hl]
 	push af
@@ -35,7 +35,7 @@ TrainerCard:
 	pop af
 	ld [wOptions], a
 	pop af
-	ld [wStateFlags], a
+	ld [wVramState], a
 	ret
 
 .InitRAM:
@@ -68,7 +68,7 @@ TrainerCard:
 	call WaitBGMap
 	ld b, SCGB_TRAINER_CARD
 	call GetSGBLayout
-	call SetDefaultBGPAndOBP
+	call SetPalettes
 	call WaitBGMap
 	ld hl, wJumptableIndex
 	xor a ; TRAINERCARDSTATE_PAGE1_LOADGFX

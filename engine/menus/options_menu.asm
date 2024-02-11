@@ -48,7 +48,7 @@ _Option:
 	call WaitBGMap
 	ld b, SCGB_DIPLOMA
 	call GetSGBLayout
-	call SetDefaultBGPAndOBP
+	call SetPalettes
 
 .joypad_loop
 	call JoyTextDelay

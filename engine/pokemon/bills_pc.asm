@@ -3,10 +3,10 @@ _DepositPKMN:
 	ld a, [hl]
 	push af
 	set NO_TEXT_SCROLL, [hl]
-	ld a, [wStateFlags]
+	ld a, [wVramState]
 	push af
 	xor a
-	ld [wStateFlags], a
+	ld [wVramState], a
 	ldh a, [hInMenu]
 	push af
 	ld a, $1
@@ -30,7 +30,7 @@ _DepositPKMN:
 	pop af
 	ldh [hInMenu], a
 	pop af
-	ld [wStateFlags], a
+	ld [wVramState], a
 	pop af
 	ld [wOptions], a
 	ret
@@ -259,10 +259,10 @@ _WithdrawPKMN:
 	ld a, [hl]
 	push af
 	set NO_TEXT_SCROLL, [hl]
-	ld a, [wStateFlags]
+	ld a, [wVramState]
 	push af
 	xor a
-	ld [wStateFlags], a
+	ld [wVramState], a
 	ldh a, [hInMenu]
 	push af
 	ld a, $1
@@ -286,7 +286,7 @@ _WithdrawPKMN:
 	pop af
 	ldh [hInMenu], a
 	pop af
-	ld [wStateFlags], a
+	ld [wVramState], a
 	pop af
 	ld [wOptions], a
 	ret
@@ -497,10 +497,10 @@ _MovePKMNWithoutMail:
 	ld a, [hl]
 	push af
 	set NO_TEXT_SCROLL, [hl]
-	ld a, [wStateFlags]
+	ld a, [wVramState]
 	push af
 	xor a
-	ld [wStateFlags], a
+	ld [wVramState], a
 	ldh a, [hInMenu]
 	push af
 	ld a, $1
@@ -527,7 +527,7 @@ _MovePKMNWithoutMail:
 	pop af
 	ldh [hInMenu], a
 	pop af
-	ld [wStateFlags], a
+	ld [wVramState], a
 	pop af
 	ld [wOptions], a
 	ret

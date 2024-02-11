@@ -31,7 +31,7 @@ PlaceDiplomaOnScreen:
 	call WaitBGMap
 	ld b, SCGB_DIPLOMA
 	call GetSGBLayout
-	call SetDefaultBGPAndOBP
+	call SetPalettes
 	call DelayFrame
 	ret
 

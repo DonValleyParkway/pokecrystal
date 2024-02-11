@@ -1727,7 +1727,7 @@ This bug is why the Lapras in [maps/UnionCaveB2F.asm](https://github.com/pret/po
  	cp PLAYER_SURF_PIKA
  	jr z, .fail
  	call GetFacingTileCoord
- 	call GetTilePermission
+ 	call GetTileCollision
  	cp WATER_TILE
 -	jr z, .facingwater
 +	jr nz, .fail
@@ -2144,7 +2144,7 @@ If `[wWalkingDirection]` is `STANDING` (`$FF`), this will check `[.EdgeWarps + $
  	ld d, 0
  	ld hl, .EdgeWarps
  	add hl, de
- 	ld a, [wPlayerTileCollision]
+ 	ld a, [wPlayerTile]
  	cp [hl]
  	jr nz, .not_warp
 

@@ -2745,7 +2745,7 @@ ForcePlayerMonChoice:
 	call LoadTilemapToTempTilemap
 	call WaitBGMap
 	call GetMemSGBLayout
-	call SetDefaultBGPAndOBP
+	call SetPalettes
 	xor a
 	ld c, a
 	ret
@@ -2764,7 +2764,7 @@ ForcePlayerMonChoice:
 	call _LoadHPBar
 	call CloseWindow
 	call GetMemSGBLayout
-	call SetDefaultBGPAndOBP
+	call SetPalettes
 	call SendOutMonText
 	call NewBattleMonStatus
 	call BreakAttraction
@@ -2828,9 +2828,9 @@ SetUpBattlePartyMenu_Loop: ; switch to fullscreen menu?
 
 JumpToPartyMenuAndPrintText:
 	farcall WritePartyMenuTilemap
-	farcall PlacePartyMenuText
+	farcall PrintPartyMenuText
 	call WaitBGMap
-	call SetDefaultBGPAndOBP
+	call SetPalettes
 	call DelayFrame
 	ret
 
@@ -2961,7 +2961,7 @@ LostBattle:
 ; Grayscale
 	ld b, SCGB_BATTLE_GRAYSCALE
 	call GetSGBLayout
-	call SetDefaultBGPAndOBP
+	call SetPalettes
 	jr .end
 
 .LostLinkBattle:
@@ -5045,7 +5045,7 @@ BattleMenu_Pack:
 	and BATTLERESULT_BITMASK
 	ld [wBattleResult], a ; WIN
 	call ClearWindowData
-	call SetDefaultBGPAndOBP
+	call SetPalettes
 	scf
 	ret
 
@@ -5095,7 +5095,7 @@ BattleMenuPKMN_Loop:
 	call CloseWindow
 	call LoadTilemapToTempTilemap
 	call GetMemSGBLayout
-	call SetDefaultBGPAndOBP
+	call SetPalettes
 	jp BattleMenu
 
 .GetMenu:
@@ -5181,7 +5181,7 @@ TryPlayerSwitch:
 	call _LoadHPBar
 	call CloseWindow
 	call GetMemSGBLayout
-	call SetDefaultBGPAndOBP
+	call SetPalettes
 	ld a, [wCurPartyMon]
 	ld [wCurBattleMon], a
 PlayerSwitch:
@@ -6963,7 +6963,7 @@ FinishBattleAnim:
 	push hl
 	ld b, SCGB_BATTLE_COLORS
 	call GetSGBLayout
-	call SetDefaultBGPAndOBP
+	call SetPalettes
 	call DelayFrame
 	pop hl
 	pop de
@@ -8459,7 +8459,7 @@ _DisplayLinkRecord:
 	call WaitBGMap2
 	ld b, SCGB_DIPLOMA
 	call GetSGBLayout
-	call SetDefaultBGPAndOBP
+	call SetPalettes
 	ld c, 8
 	call DelayFrames
 	call WaitPressAorB_BlinkCursor
@@ -8940,7 +8940,7 @@ InitBattleDisplay:
 	call HideSprites
 	ld b, SCGB_BATTLE_COLORS
 	call GetSGBLayout
-	call SetDefaultBGPAndOBP
+	call SetPalettes
 	ld a, $90
 	ldh [hWY], a
 	xor a
@@ -9076,7 +9076,7 @@ BattleStartMessage:
 	farcall Battle_GetTrainerName
 
 	ld hl, WantsToBattleText
-	jr .PrintBattleStartText
+	jr .PlaceBattleStartText
 
 .wild
 	call BattleCheckEnemyShininess
@@ -9118,18 +9118,18 @@ BattleStartMessage:
 	farcall StubbedTrainerRankings_HookedEncounters
 
 	ld hl, HookedPokemonAttackedText
-	jr .PrintBattleStartText
+	jr .PlaceBattleStartText
 
 .NotFishing:
 	ld hl, PokemonFellFromTreeText
 	cp BATTLETYPE_TREE
-	jr z, .PrintBattleStartText
+	jr z, .PlaceBattleStartText
 	ld hl, WildCelebiAppearedText
 	cp BATTLETYPE_CELEBI
-	jr z, .PrintBattleStartText
+	jr z, .PlaceBattleStartText
 	ld hl, WildPokemonAppearedText
 
-.PrintBattleStartText:
+.PlaceBattleStartText:
 	push hl
 	farcall BattleStart_TrainerHuds
 	pop hl

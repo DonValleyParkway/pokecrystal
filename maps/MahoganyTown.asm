@@ -5,6 +5,7 @@ DEF MAHOGANYTOWN_RAGECANDYBAR_PRICE EQU 300
 	const MAHOGANYTOWN_GRAMPS
 	const MAHOGANYTOWN_FISHER
 	const MAHOGANYTOWN_LASS
+	const MAHOGANYTOWN_ONIX
 
 MahoganyTown_MapScripts:
 	def_scene_scripts
@@ -101,6 +102,17 @@ MahoganyTownGrampsScript:
 	writetext MahoganyTownGrampsText_ClearedRocketHideout
 	waitbutton
 	closetext
+	end
+
+MahoganyOnixOverworld:
+    cry ONIX
+	pause 20
+	loadwildmon ONIX, 40
+	loadvar VAR_BATTLETYPE, BATTLETYPE_FORCESHINY
+	startbattle
+	reloadmapafterbattle
+	disappear MAHOGANYTOWN_ONIX
+	playmapmusic
 	end
 
 MahoganyTownFisherScript:
@@ -269,3 +281,4 @@ MahoganyTown_MapEvents:
 	object_event  6,  9, SPRITE_GRAMPS, SPRITEMOVEDATA_WALK_LEFT_RIGHT, 1, 0, -1, -1, 0, OBJECTTYPE_SCRIPT, 0, MahoganyTownGrampsScript, -1
 	object_event  6, 14, SPRITE_FISHER, SPRITEMOVEDATA_STANDING_DOWN, 0, 0, -1, -1, PAL_NPC_GREEN, OBJECTTYPE_SCRIPT, 0, MahoganyTownFisherScript, EVENT_MAHOGANY_TOWN_POKEFAN_M_BLOCKS_GYM
 	object_event 12,  8, SPRITE_LASS, SPRITEMOVEDATA_STANDING_DOWN, 0, 0, -1, -1, 0, OBJECTTYPE_SCRIPT, 0, MahoganyTownLassScript, EVENT_MAHOGANY_MART_OWNERS
+	object_event  4, 14, SPRITE_POKEDEX, SPRITEMOVEDATA_STILL, 0, 0, -1, -1, PAL_NPC_BLUE, OBJECTTYPE_SCRIPT, 0, MahoganyOnixOverworld, -1

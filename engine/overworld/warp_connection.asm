@@ -226,13 +226,13 @@ EnterMapWarp:
 	ret
 
 LoadMapTimeOfDay:
-	ld hl, wStateFlags
-	res TEXT_STATE_F, [hl]
-	ld a, TRUE
+	ld hl, wVramState
+	res 6, [hl]
+	ld a, $1
 	ld [wSpriteUpdatesEnabled], a
 	farcall ReplaceTimeOfDayPals
 	farcall UpdateTimeOfDayPal
-	call LoadOverworldTilemapAndAttrmapPals
+	call OverworldTextModeSwitch
 	call .ClearBGMap
 	call .PushAttrmap
 	ret
@@ -321,8 +321,8 @@ RefreshMapSprites:
 	ld hl, wPlayerSpriteSetupFlags
 	bit PLAYERSPRITESETUP_SKIP_RELOAD_GFX_F, [hl]
 	jr nz, .skip
-	ld hl, wStateFlags
-	set SPRITE_UPDATES_DISABLED_F, [hl]
+	ld hl, wVramState
+	set 0, [hl]
 	call SafeUpdateSprites
 .skip
 	ld a, [wPlayerSpriteSetupFlags]

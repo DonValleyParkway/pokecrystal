@@ -608,7 +608,7 @@ Function1704e1:
 	bit 7, a
 	jr nz, .done
 	call .DoJumptable
-	farcall HDMATransferTilemapAndAttrmap_Overworld
+	farcall ReloadMapPart
 	jr .loop
 
 .done
@@ -654,7 +654,7 @@ Function1704e1:
 	jr .NextJumptableFunction
 
 .Jumptable_1:
-	call SetDefaultBGPAndOBP
+	call SetPalettes
 	call .NextJumptableFunction
 
 .Jumptable_2:

@@ -77,7 +77,7 @@ Function17c000:
 	ldh [rVBK], a
 
 	call EnableLCD
-	farcall HDMATransferTilemapAndAttrmap_Overworld
+	farcall ReloadMapPart
 	ret
 
 HaveWantGFX:
@@ -604,7 +604,7 @@ Function17d370:
 	call ClearBGPalettes
 	call ClearSprites
 	call ClearScreen
-	farcall HDMATransferTilemapAndAttrmap_Overworld
+	farcall ReloadMapPart
 	call DisableLCD
 	ld hl, vTiles0 tile $ee
 	ld de, wc608
@@ -649,7 +649,7 @@ Function17d3f6:
 	call ClearBGPalettes
 	call ClearSprites
 	call ClearScreen
-	farcall HDMATransferTilemapAndAttrmap_Overworld
+	farcall ReloadMapPart
 
 Function17d405:
 	call DisableLCD
@@ -682,7 +682,7 @@ Function17d405:
 	ld de, wBGPals1
 	ld bc, 8 palettes
 	call CopyBytes
-	call SetDefaultBGPAndOBP
+	call SetPalettes
 	pop af
 	ldh [rSVBK], a
 	ret
@@ -694,7 +694,7 @@ Function17d45a:
 	bit 7, a
 	jr nz, .asm_17d46f
 	call Function17d474
-	farcall HDMATransferTilemapAndAttrmap_Overworld
+	farcall ReloadMapPart
 	jr .asm_17d45a
 
 .asm_17d46f
@@ -893,11 +893,11 @@ Function17d48d:
 	call Function17e451
 	call Function17e55b
 	call Function17e5af
-	farcall HDMATransferTilemapAndAttrmap_Overworld
+	farcall ReloadMapPart
 	jp Function17e438
 
 Function17d5be:
-	call SetDefaultBGPAndOBP
+	call SetPalettes
 	call Function17e438
 
 Function17d5c4:
@@ -1443,7 +1443,7 @@ Function17d93a:
 	ld a, [wc70c]
 	ld e, a
 	farcall LoadMonPaletteAsNthBGPal
-	call SetDefaultBGPAndOBP
+	call SetPalettes
 	ld a, [wc708]
 	ld l, a
 	ld a, [wc709]
@@ -1478,7 +1478,7 @@ Function17d98b:
 	ld a, [wc70b]
 	ld e, a
 	farcall LoadTrainerClassPaletteAsNthBGPal
-	call SetDefaultBGPAndOBP
+	call SetPalettes
 	ld a, [wc708]
 	ld e, a
 	ld a, [wc709]
@@ -1979,7 +1979,7 @@ Function17dd13:
 	push hl
 	pop bc
 	pop hl
-	call PrintTextboxTextAt
+	call PlaceHLTextAtBC
 	ret
 
 Function17dd30:
@@ -4512,7 +4512,7 @@ Function17f5c3:
 Function17f5d2:
 	call Function17f5e4
 	farcall HDMATransferAttrmapAndTilemapToWRAMBank3
-	call SetDefaultBGPAndOBP
+	call SetPalettes
 	ld a, $1
 	ld [wc303], a
 	ret

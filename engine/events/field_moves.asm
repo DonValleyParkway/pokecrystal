@@ -10,7 +10,7 @@ PlayWhirlpoolSound:
 	ret
 
 BlindingFlash:
-	farcall FadeOutToWhite
+	farcall FadeOutPalettes
 	ld hl, wStatusFlags
 	set STATUSFLAGS_FLASH_F, [hl]
 	farcall ReplaceTimeOfDayPals
@@ -18,7 +18,7 @@ BlindingFlash:
 	ld b, SCGB_MAPPALS
 	call GetSGBLayout
 	farcall LoadOW_BGPal7
-	farcall FadeInFromWhite
+	farcall FadeInPalettes
 	ret
 
 ShakeHeadbuttTree:
@@ -59,7 +59,7 @@ ShakeHeadbuttTree:
 	jr .loop
 
 .done
-	call LoadOverworldTilemapAndAttrmapPals
+	call OverworldTextModeSwitch
 	call WaitBGMap
 	xor a
 	ldh [hBGMapMode], a
@@ -298,10 +298,10 @@ Cut_Headbutt_GetPixelFacing:
 
 FlyFromAnim:
 	call DelayFrame
-	ld a, [wStateFlags]
+	ld a, [wVramState]
 	push af
 	xor a
-	ld [wStateFlags], a
+	ld [wVramState], a
 	call FlyFunction_InitGFX
 	depixel 10, 10, 4, 0
 	ld a, SPRITE_ANIM_OBJ_RED_WALK
@@ -327,15 +327,15 @@ FlyFromAnim:
 
 .exit
 	pop af
-	ld [wStateFlags], a
+	ld [wVramState], a
 	ret
 
 FlyToAnim:
 	call DelayFrame
-	ld a, [wStateFlags]
+	ld a, [wVramState]
 	push af
 	xor a
-	ld [wStateFlags], a
+	ld [wVramState], a
 	call FlyFunction_InitGFX
 	depixel 31, 10, 4, 0
 	ld a, SPRITE_ANIM_OBJ_RED_WALK
@@ -364,7 +364,7 @@ FlyToAnim:
 
 .exit
 	pop af
-	ld [wStateFlags], a
+	ld [wVramState], a
 	call .RestorePlayerSprite_DespawnLeaves
 	ret
 

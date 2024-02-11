@@ -12,8 +12,9 @@
 	const GOLDENRODCITY_ROCKET3
 	const GOLDENRODCITY_ROCKET4
 	const GOLDENRODCITY_ROCKET5
-	const GOLDENRODCITY_ROCKET6
+	;const GOLDENRODCITY_ROCKET6
 	const GOLDENRODCITY_MOVETUTOR
+	const GOLDENRODCITY_ZAPDOSPREV
 
 GoldenrodCity_MapScripts:
 	def_scene_scripts
@@ -212,6 +213,9 @@ GoldenrodCityRocketScoutScript:
 	closetext
 	turnobject GOLDENRODCITY_ROCKETSCOUT, UP
 	end
+	
+GoldenrodCityZapdosPreview:
+	end
 
 GoldenrodCityRocket1Script:
 	jumptextfaceplayer GoldenrodCityRocket1Text
@@ -228,8 +232,8 @@ GoldenrodCityRocket4Script:
 GoldenrodCityRocket5Script:
 	jumptextfaceplayer GoldenrodCityRocket5Text
 
-GoldenrodCityRocket6Script:
-	jumptextfaceplayer GoldenrodCityRocket6Text
+;GoldenrodCityRocket6Script:
+;	jumptextfaceplayer GoldenrodCityRocket6Text
 
 GoldenrodCityStationSign:
 	jumptext GoldenrodCityStationSignText
@@ -406,11 +410,11 @@ GoldenrodCityRocket5Text:
 	cont "Get lost!"
 	done
 
-GoldenrodCityRocket6Text:
-	text "Come taste the"
-	line "true terror of"
-	cont "TEAM ROCKET!"
-	done
+;GoldenrodCityRocket6Text:
+;	text "Come taste the"
+;	line "true terror of"
+;	cont "TEAM ROCKET!"
+;	done
 
 GoldenrodCityStationSignText:
 	text "GOLDENROD CITY"
@@ -598,5 +602,6 @@ GoldenrodCity_MapEvents:
 	object_event 16, 23, SPRITE_ROCKET, SPRITEMOVEDATA_STANDING_RIGHT, 0, 0, -1, -1, 0, OBJECTTYPE_SCRIPT, 0, GoldenrodCityRocket3Script, EVENT_RADIO_TOWER_ROCKET_TAKEOVER
 	object_event 29, 20, SPRITE_ROCKET, SPRITEMOVEDATA_STANDING_UP, 0, 0, -1, -1, 0, OBJECTTYPE_SCRIPT, 0, GoldenrodCityRocket4Script, EVENT_RADIO_TOWER_ROCKET_TAKEOVER
 	object_event 29,  7, SPRITE_ROCKET, SPRITEMOVEDATA_STANDING_DOWN, 0, 0, -1, -1, 0, OBJECTTYPE_SCRIPT, 0, GoldenrodCityRocket5Script, EVENT_RADIO_TOWER_ROCKET_TAKEOVER
-	object_event 31, 10, SPRITE_ROCKET, SPRITEMOVEDATA_STANDING_LEFT, 0, 0, -1, -1, 0, OBJECTTYPE_SCRIPT, 0, GoldenrodCityRocket6Script, EVENT_RADIO_TOWER_ROCKET_TAKEOVER
-	object_event 12, 22, SPRITE_POKEFAN_M, SPRITEMOVEDATA_SPINRANDOM_SLOW, 0, 0, -1, -1, PAL_NPC_RED, OBJECTTYPE_SCRIPT, 0, MoveTutorScript, EVENT_GOLDENROD_CITY_MOVE_TUTOR
+	;object_event 31, 10, SPRITE_ROCKET, SPRITEMOVEDATA_STANDING_LEFT, 0, 0, -1, -1, 0, OBJECTTYPE_SCRIPT, 0, GoldenrodCityRocket6Script, EVENT_RADIO_TOWER_ROCKET_TAKEOVER
+    object_event 12, 22, SPRITE_POKEFAN_M, SPRITEMOVEDATA_SPINRANDOM_SLOW, 0, 0, -1, -1, PAL_NPC_RED, OBJECTTYPE_SCRIPT, 0, MoveTutorScript, EVENT_GOLDENROD_CITY_MOVE_TUTOR
+	object_event 24, 20, SPRITE_BIRD, SPRITEMOVEDATA_STILL, 0, 0, -1, -1, PAL_NPC_BROWN, OBJECTTYPE_SCRIPT, 0, GoldenrodCityZapdosPreview, -1

@@ -10,17 +10,17 @@ SpriteMons:
 	db GENGAR
 	db ZUBAT
 	db MAGIKARP
-	db SQUIRTLE
+ 	db SQUIRTLE
 	db TOGEPI
 	db BUTTERFREE
 	db DIGLETT
 	db POLIWAG
 	db PIKACHU
 	db CLEFAIRY
-	db CHARMANDER
+ 	db CHARMANDER
 	db JYNX
 	db STARMIE
-	db BULBASAUR
+ 	db BULBASAUR
 	db JIGGLYPUFF
 	db GRIMER
 	db EKANS
@@ -36,4 +36,5 @@ SpriteMons:
 	db GYARADOS
 	db LUGIA
 	db HO_OH
+	db MEWTWO
 	assert_table_length NUM_POKEMON_SPRITES

@@ -602,7 +602,7 @@ DebugRoom_EditPagedValues:
 	call WaitBGMap
 	ld b, SCGB_DIPLOMA
 	call GetSGBLayout
-	call SetDefaultBGPAndOBP
+	call SetPalettes
 .resume
 	call DelayFrame
 	call JoyTextDelay

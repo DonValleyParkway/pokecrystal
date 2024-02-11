@@ -324,8 +324,8 @@ ReloadSpritesNoPalettes::
 	call DelayFrame
 	ret
 
-LoadOverworldAttrmapPals::
-	homecall _LoadOverworldAttrmapPals
+SwapTextboxPalettes::
+	homecall _SwapTextboxPalettes
 	ret
 
 ScrollBGMapPalettes::

@@ -200,13 +200,13 @@ CheckMapForSomethingToCut:
 	ret
 
 Script_CutFromMenu:
-	refreshmap
+	reloadmappart
 	special UpdateTimePals
 
 Script_Cut:
 	callasm GetPartyNickname
 	writetext UseCutText
-	refreshmap
+	reloadmappart
 	callasm CutDownTreeOrGrass
 	closetext
 	end
@@ -220,7 +220,7 @@ CutDownTreeOrGrass:
 	ld [hl], a
 	xor a
 	ldh [hBGMapMode], a
-	call LoadOverworldTilemapAndAttrmapPals
+	call OverworldTextModeSwitch
 	call UpdateSprites
 	call DelayFrame
 	ld a, [wCutWhirlpoolAnimationType]
@@ -307,7 +307,7 @@ UseFlash:
 	jp QueueScript
 
 Script_UseFlash:
-	refreshmap
+	reloadmappart
 	special UpdateTimePals
 	writetext UseFlashTextScript
 	callasm BlindingFlash
@@ -356,7 +356,7 @@ SurfFunction:
 	cp PLAYER_SURF_PIKA
 	jr z, .alreadyfail
 	call GetFacingTileCoord
-	call GetTilePermission
+	call GetTileCollision
 	cp WATER_TILE
 	jr nz, .cannotsurf
 	call CheckDirection
@@ -494,7 +494,7 @@ TrySurfOW::
 
 ; Must be facing water.
 	ld a, [wFacingTileID]
-	call GetTilePermission
+	call GetTileCollision
 	cp WATER_TILE
 	jr nz, .quit
 
@@ -608,7 +608,7 @@ FlyFunction:
 	ret
 
 .FlyScript:
-	refreshmap
+	reloadmappart
 	callasm HideSprites
 	special UpdateTimePals
 	callasm FlyFromAnim
@@ -668,7 +668,7 @@ CheckMapCanWaterfall:
 	ret
 
 Script_WaterfallFromMenu:
-	refreshmap
+	reloadmappart
 	special UpdateTimePals
 
 Script_UsedWaterfall:
@@ -686,7 +686,7 @@ Script_UsedWaterfall:
 .CheckContinueWaterfall:
 	xor a
 	ld [wScriptVar], a
-	ld a, [wPlayerTileCollision]
+	ld a, [wPlayerTile]
 	call CheckWaterfallTile
 	ret z
 	farcall StubbedTrainerRankings_Waterfall
@@ -838,13 +838,13 @@ EscapeRopeOrDig:
 	text_end
 
 .UsedEscapeRopeScript:
-	refreshmap
+	reloadmappart
 	special UpdateTimePals
 	writetext .UseEscapeRopeText
 	sjump .UsedDigOrEscapeRopeScript
 
 .UsedDigScript:
-	refreshmap
+	reloadmappart
 	special UpdateTimePals
 	writetext .UseDigText
 
@@ -930,11 +930,11 @@ TeleportFunction:
 	text_end
 
 .TeleportScript:
-	refreshmap
+	reloadmappart
 	special UpdateTimePals
 	writetext .TeleportReturnText
 	pause 60
-	refreshmap
+	reloadmappart
 	closetext
 	playsound SFX_WARP_TO
 	applymovement PLAYER, .TeleportFrom
@@ -1000,7 +1000,7 @@ SetStrengthFlag:
 	ret
 
 Script_StrengthFromMenu:
-	refreshmap
+	reloadmappart
 	special UpdateTimePals
 
 Script_UsedStrength:
@@ -1159,13 +1159,13 @@ TryWhirlpoolMenu:
 	ret
 
 Script_WhirlpoolFromMenu:
-	refreshmap
+	reloadmappart
 	special UpdateTimePals
 
 Script_UsedWhirlpool:
 	callasm GetPartyNickname
 	writetext UseWhirlpoolText
-	refreshmap
+	reloadmappart
 	callasm DisappearWhirlpool
 	closetext
 	end
@@ -1179,7 +1179,7 @@ DisappearWhirlpool:
 	ld [hl], a
 	xor a
 	ldh [hBGMapMode], a
-	call LoadOverworldTilemapAndAttrmapPals
+	call OverworldTextModeSwitch
 	ld a, [wCutWhirlpoolAnimationType]
 	ld e, a
 	farcall PlayWhirlpoolSound
@@ -1258,14 +1258,14 @@ HeadbuttNothingText:
 	text_end
 
 HeadbuttFromMenuScript:
-	refreshmap
+	reloadmappart
 	special UpdateTimePals
 
 HeadbuttScript:
 	callasm GetPartyNickname
 	writetext UseHeadbuttText
 
-	refreshmap
+	reloadmappart
 	callasm ShakeHeadbuttTree
 
 	callasm TreeMonEncounter
@@ -1355,7 +1355,7 @@ GetFacingObject:
 	ret
 
 RockSmashFromMenuScript:
-	refreshmap
+	reloadmappart
 	special UpdateTimePals
 
 RockSmashScript:
@@ -1366,7 +1366,7 @@ RockSmashScript:
 	playsound SFX_STRENGTH
 	earthquake 84
 	applymovementlasttalked MovementData_RockSmash
-	disappear LAST_TALKED
+	disappear -2
 
 	callasm RockMonEncounter
 	readmem wTempWildMonSpecies
@@ -1449,7 +1449,7 @@ FishFunction:
 	cp PLAYER_SURF_PIKA
 	jr z, .fail
 	call GetFacingTileCoord
-	call GetTilePermission
+	call GetTileCollision
 	cp WATER_TILE
 	jr z, .facingwater
 .fail
@@ -1582,7 +1582,7 @@ Fishing_CheckFacingUp:
 	ret
 
 Script_FishCastRod:
-	refreshmap
+	reloadmappart
 	loadmem hBGMapMode, $0
 	special UpdateTimePals
 	loademote EMOTE_ROD
@@ -1693,7 +1693,7 @@ BikeFunction:
 	jr .nope
 
 .ok
-	call GetPlayerTilePermission
+	call GetPlayerTile
 	and $f ; lo nybble only
 	jr nz, .nope ; not FLOOR_TILE
 	xor a
@@ -1704,7 +1704,7 @@ BikeFunction:
 	ret
 
 Script_GetOnBike:
-	refreshmap
+	reloadmappart
 	special UpdateTimePals
 	loadvar VAR_MOVEMENT, PLAYER_BIKE
 	writetext GotOnBikeText
@@ -1724,7 +1724,7 @@ Overworld_DummyFunction: ; unreferenced
 	ret
 
 Script_GetOffBike:
-	refreshmap
+	reloadmappart
 	special UpdateTimePals
 	loadvar VAR_MOVEMENT, PLAYER_NORMAL
 	writetext GotOffBikeText

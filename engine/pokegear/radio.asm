@@ -133,7 +133,7 @@ PrintRadioLine:
 	cp 2
 	jr nz, .print
 	bccoord 1, 16
-	call PrintTextboxTextAt
+	call PlaceHLTextAtBC
 	jr .skip
 .print
 	call PrintTextboxText

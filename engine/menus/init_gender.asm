@@ -25,7 +25,7 @@ InitGender:
 	call LoadGenderScreenPal
 	call LoadGenderScreenLightBlueTile
 	call WaitBGMap2
-	call SetDefaultBGPAndOBP
+	call SetPalettes
 	ld hl, AreYouABoyOrAreYouAGirlText
 	call PrintText
 	ld hl, .MenuHeader

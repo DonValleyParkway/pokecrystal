@@ -7,6 +7,7 @@
 	const GOLDENRODDEPTSTOREROOF_POKEFAN_M
 	const GOLDENRODDEPTSTOREROOF_TEACHER
 	const GOLDENRODDEPTSTOREROOF_BUG_CATCHER
+	const GOLDENRODDEPTSTOREROOF_ZAPDOS
 
 GoldenrodDeptStoreRoof_MapScripts:
 	def_scene_scripts
@@ -26,10 +27,20 @@ GoldenrodDeptStoreRoofCheckSaleChangeBlockCallback:
 	endcallback
 
 GoldenrodDeptStoreRoofCheckSaleChangeClerkCallback:
+    checkflag EVENT_FOUGHT_ZAPDOS
+	iffalse .ZapdosEncounter
+	disappear GOLDENRODDEPTSTOREROOF_ZAPDOS
 	checkflag ENGINE_GOLDENROD_DEPT_STORE_SALE_IS_ON
 	iftrue .ChangeClerk
 	setevent EVENT_GOLDENROD_SALE_OFF
 	clearevent EVENT_GOLDENROD_SALE_ON
+	endcallback
+	
+.ZapdosEncounter:
+    disappear GOLDENRODDEPTSTOREROOF_POKEFAN_F
+	disappear GOLDENRODDEPTSTOREROOF_FISHER
+	disappear GOLDENRODDEPTSTOREROOF_TWIN
+	disappear GOLDENRODDEPTSTOREROOF_SUPER_NERD
 	endcallback
 
 .ChangeClerk:
@@ -79,6 +90,20 @@ GoldenrodDeptStoreRoofTeacherScript:
 
 GoldenrodDeptStoreRoofBugCatcherScript:
 	jumptextfaceplayer GoldenrodDeptStoreRoofBugCatcherText
+	
+GoldenrodDeptStoreZapdos:
+    giveitem MASTER_BALL
+    faceplayer
+    cry ZAPDOS
+	pause 20
+	setevent EVENT_FOUGHT_ZAPDOS
+	loadvar VAR_BATTLETYPE, BATTLETYPE_FORCEITEM
+	loadwildmon ZAPDOS, 60
+	startbattle
+	disappear GOLDENRODDEPTSTOREROOF_ZAPDOS
+	reloadmapafterbattle
+	playmapmusic
+	end
 
 Binoculars1:
 	jumptext Binoculars1Text
@@ -232,3 +257,4 @@ GoldenrodDeptStoreRoof_MapEvents:
 	object_event  7,  0, SPRITE_POKEFAN_M, SPRITEMOVEDATA_WALK_LEFT_RIGHT, 1, 0, -1, -1, 0, OBJECTTYPE_SCRIPT, 0, GoldenrodDeptStoreRoofPokefanMScript, EVENT_GOLDENROD_SALE_OFF
 	object_event  5,  3, SPRITE_TEACHER, SPRITEMOVEDATA_WANDER, 1, 1, -1, -1, PAL_NPC_GREEN, OBJECTTYPE_SCRIPT, 0, GoldenrodDeptStoreRoofTeacherScript, EVENT_GOLDENROD_SALE_OFF
 	object_event  1,  6, SPRITE_BUG_CATCHER, SPRITEMOVEDATA_STANDING_UP, 0, 0, -1, -1, PAL_NPC_RED, OBJECTTYPE_SCRIPT, 0, GoldenrodDeptStoreRoofBugCatcherScript, EVENT_GOLDENROD_SALE_OFF
+	object_event  4,  2, SPRITE_BIRD, SPRITEMOVEDATA_STILL, 0, 0, -1, -1, PAL_NPC_BROWN, OBJECTTYPE_SCRIPT, 0, GoldenrodDeptStoreZapdos, -1
